@@ -7,6 +7,7 @@ Description: In the fast-paced digital world of today, deep conversations about 
 This platform is intellectually stimulating and practically useful, catalyzing insightful discussions on diverse subjects. By featuring curated conversation starters, an advanced polling system, moderated discussion forums, and contributions from subject matter experts, the application aims to spark curiosity, encourage critical thinking, and foster empathy among its users. The platform will incorporate gamification elements to incentivize thoughtful contributions and challenges to promote engagement with diverse viewpoints. 
 
 Development Team members:
+
 Lucas Cunningham, lcunnin1@umbc.edu, roles: Back-end developer - will mainly handle the back-end development and do most of the testing.
 
 Jonathan Kim, jkim71@umbc.edu, roles: Front-end developer - will mainly handle the front-end development and testing.
