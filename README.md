@@ -13,3 +13,7 @@ Lucas Cunningham, lcunnin1@umbc.edu, roles: Back-end developer - will mainly han
 Jonathan Kim, jkim71@umbc.edu, roles: Front-end developer - will mainly handle the front-end development and testing.
 
 Sanjida Shehrin, sshehri1@umbc.edu, roles: Scrum Manager - will keep all members on track and schedule meetings to see our progress and what needs to be done to meet the sprint requirements. Will also help develop the front-end or back-end depending on the progress.
+
+
+To run this:
+1. Make sure you have Node.js and npm installed on your system.
