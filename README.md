@@ -14,6 +14,21 @@ Jonathan Kim, jkim71@umbc.edu, roles: Front-end developer - will mainly handle t
 
 Sanjida Shehrin, sshehri1@umbc.edu, roles: Scrum Manager - will keep all members on track and schedule meetings to see our progress and what needs to be done to meet the sprint requirements. Will also help develop the front-end or back-end depending on the progress.
 
+# Getting Started with Create React App
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Available Scripts
+
+In the project directory, you can run:
+
+### `npm start`
+
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+
+The page will reload when you make changes.
 
 To run this:
-1. Make sure you have Node.js and npm installed on your system.
+1. From the home directory, go to "cd frontend"
+2. Make sure you have Node.js and npm installed on your system.
