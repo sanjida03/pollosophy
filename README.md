@@ -24,7 +24,7 @@ Installing Pollosophy
 To install Pollosophy, follow these steps:
 
 Clone the repository:
-git clone https://github.com/yourusername/pollosophy.git
+git clone https://github.com/sanjida03/pollosophy.git
 
 Navigate to the project directory:
 cd frontend
