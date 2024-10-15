@@ -14,21 +14,45 @@ Jonathan Kim, jkim71@umbc.edu, roles: Front-end developer - will mainly handle t
 
 Sanjida Shehrin, sshehri1@umbc.edu, roles: Scrum Manager - will keep all members on track and schedule meetings to see our progress and what needs to be done to meet the sprint requirements. Will also help develop the front-end or back-end depending on the progress.
 
-# Getting Started with Create React App
+Prerequisites
+Before you begin, ensure you have met the following requirements:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+1. You have installed the latest version of Node.js and npm
+2. You have a Windows/Linux/Mac machine.
 
-## Available Scripts
+Installing Pollosophy
+To install Pollosophy, follow these steps:
 
-In the project directory, you can run:
+Clone the repository:
+Copygit clone https://github.com/yourusername/pollosophy.git
 
-### `npm start`
+Navigate to the project directory:
+cd frontend
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Install the dependencies:
+npm install
 
-The page will reload when you make changes.
+Running Pollosophy
+To run Pollosophy, follow these steps:
 
-To run this:
-1. From the home directory, go to "cd frontend"
-2. Make sure you have Node.js and npm installed on your system.
+Start the development server:
+npm start
+
+Open your web browser and navigate to http://localhost:3000
+
+You should now see the Pollosophy application running in your browser.
+Using Pollosophy
+Here are some basic usage instructions:
+
+Navigate through different pages using the navigation bar at the top.
+View sample polls on the Polls page.
+Use the Login and Register pages to see the form layouts (note: actual authentication is not implemented in this demo version).
+
+Contributing to Pollosophy
+To contribute to Pollosophy, follow these steps:
+
+1. Fork this repository.
+2. Create a branch: git checkout -b <branch_name>.
+3. Make your changes and commit them: git commit -m '<commit_message>'
+4. Then push the changes: git push
+5. Create the pull request.
