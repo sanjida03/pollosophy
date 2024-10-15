@@ -6,6 +6,8 @@ const Navbar = ({ setCurrentPage }) => (
     <ul className="flex space-x-4 text-white">
       <li><button onClick={() => setCurrentPage('home')}>Home</button></li>
       <li><button onClick={() => setCurrentPage('polls')}>Polls</button></li>
+      <li><button onClick={() => setCurrentPage('login')}>Login</button></li>
+      <li><button onClick={() => setCurrentPage('register')}>Register</button></li>
     </ul>
   </nav>
 );
