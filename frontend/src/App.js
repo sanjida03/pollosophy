@@ -1,78 +1,68 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-// Navbar Component
-const Navbar = ({ setCurrentPage }) => (
-  <nav className="bg-blue-500 p-4">
-    <ul className="flex space-x-4 text-white">
-      <li><button onClick={() => setCurrentPage('home')}>Home</button></li>
-      <li><button onClick={() => setCurrentPage('polls')}>Polls</button></li>
-      <li><button onClick={() => setCurrentPage('login')}>Login</button></li>
-      <li><button onClick={() => setCurrentPage('register')}>Register</button></li>
-    </ul>
-  </nav>
-);
-
-// Home Component
-const Home = () => (
-  <div className="container mx-auto mt-8 p-4">
-    <h1 className="text-4xl font-bold mb-4">Welcome to Pollosophy</h1>
-    <p className="text-lg">Engage in meaningful discussions through polls and comments.</p>
-  </div>
-);
-
-// Polls Component
-const Polls = () => {
-  const [polls] = useState([
-    { id: 1, question: "What's your favorite programming language?", options: ["JavaScript", "Python", "Java", "C++"] },
-
-  ]);
-
+const PollLanding = () => {
   return (
-    <div className="container mx-auto mt-8 p-4">
-      <h2 className="text-2xl font-bold mb-4">Current Polls</h2>
-      {polls.map(poll => (
-        <div key={poll.id} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-          <h3 className="text-xl font-semibold mb-2">{poll.question}</h3>
-          <ul className="space-y-2">
-            {poll.options.map((option, index) => (
-              <li key={index} className="flex items-center">
-                <input type="radio" id={`poll-${poll.id}-option-${index}`} name={`poll-${poll.id}`} className="mr-2" />
-                <label htmlFor={`poll-${poll.id}-option-${index}`}>{option}</label>
-              </li>
-            ))}
-          </ul>
-          <button className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Vote
-          </button>
+    <div className="min-h-screen bg-blue-50">
+      {/* Navigation */}
+      <nav className="py-4 px-6 border-b border-gray-100 bg-white">
+        <div className="container mx-auto flex items-center justify-between">
+          {/* Logo */}
+          <div className="text-2xl font-bold text-blue-700">Pollosophy</div>
+          <img src="logo192.png" alt="Pollosophy Logo" className="w-8 h-8" />
         </div>
-      ))}
+      </nav>
+
+      {/* Main Content */}
+      <main className="container mx-auto px-6 py-16">
+        <div className="max-w-md mx-auto bg-blue-100 rounded-lg p-8 shadow-md">
+          <h2 className="text-2xl font-bold text-center mb-8 text-gray-800">Welcome to Pollosophy</h2>
+          
+          {/* Centered Buttons */}
+          <div className="space-y-4">
+            <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md transition-colors text-lg font-medium">
+              Log In
+            </button>
+
+            <button className="w-full bg-blue-700 hover:bg-blue-800 text-white py-3 rounded-md transition-colors text-lg font-medium">
+              Sign Up
+            </button>
+
+            <button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-md transition-colors text-lg font-medium">
+              View Active Polls
+            </button>
+          </div>
+
+          {/* Guest Access Note */}
+          <p className="text-center mt-6 text-sm text-gray-600">
+            You can view polls without an account
+          </p>
+        </div>
+
+        {/* Marketing Content Below */}
+        <div className="text-center mt-16">
+          <h1 className="text-4xl font-bold text-gray-800 mb-4">
+            Live polling made simple
+          </h1>
+          <p className="text-xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
+            Engage in meaningful conversations through polls and comments.
+            Vote and discuss with our growing community.
+          </p>
+        </div>
+
+        {/* Feature Grid */}
+        <div className="grid md:grid-cols-2 gap-8 mt-16 max-w-4xl mx-auto">
+          <div className="text-center p-6 bg-white rounded-lg shadow-sm">
+            <h3 className="font-bold text-lg mb-2">Real-time Results</h3>
+            <p className="text-gray-600">Watch votes and discussions unfold in real-time</p>
+          </div>
+          <div className="text-center p-6 bg-white rounded-lg shadow-sm">
+            <h3 className="font-bold text-lg mb-2">Join Discussions</h3>
+            <p className="text-gray-600">Share your thoughts and engage with others</p>
+          </div>
+        </div>
+      </main>
     </div>
   );
 };
 
-
-
-// Main App Component
-const App = () => {
-  const [currentPage, setCurrentPage] = useState('home');
-
-  const renderPage = () => {
-    switch(currentPage) {
-      case 'home':
-        return <Home />;
-      case 'polls':
-        return <Polls />;
-      default:
-        return <Home />;
-    }
-  };
-
-  return (
-    <div className="min-h-screen bg-gray-100">
-      <Navbar setCurrentPage={setCurrentPage} />
-      {renderPage()}
-    </div>
-  );
-};
-
-export default App;
+export default PollLanding;
