@@ -1,21 +1,16 @@
 import React from 'react';
+import Header from './components/header';
 
 const PollLanding = () => {
   return (
+    
     <div className="min-h-screen bg-blue-50">
-      {/* Navigation */}
-      <nav className="py-4 px-6 border-b border-gray-100 bg-white">
-        <div className="container mx-auto flex items-center justify-between">
-          {/* Logo */}
-          <div className="text-2xl font-bold text-blue-700">Pollosophy</div>
-          <img src="logo192.png" alt="Pollosophy Logo" className="w-8 h-8" />
-        </div>
-      </nav>
-
+      <Header />
+      
       {/* Main Content */}
       <main className="container mx-auto px-6 py-16">
         <div className="max-w-md mx-auto bg-blue-100 rounded-lg p-8 shadow-md">
-          <h2 className="text-2xl font-bold text-center mb-8 text-gray-800">Welcome to Pollosophy</h2>
+          <h2 className="text-2xl font-bold text-center mb-8 text-blue-900">Welcome to Pollosophy</h2>
           
           {/* Centered Buttons */}
           <div className="space-y-4">
@@ -23,17 +18,17 @@ const PollLanding = () => {
               Log In
             </button>
 
-            <button className="w-full bg-blue-700 hover:bg-blue-800 text-white py-3 rounded-md transition-colors text-lg font-medium">
+            <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md transition-colors text-lg font-medium">
               Sign Up
             </button>
 
-            <button className="w-full bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-md transition-colors text-lg font-medium">
+            <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md transition-colors text-lg font-medium">
               View Active Polls
             </button>
           </div>
 
           {/* Guest Access Note */}
-          <p className="text-center mt-6 text-sm text-gray-600">
+          <p className="text-center mt-6 text-sm text-blue-900">
             You can view polls without an account
           </p>
         </div>
