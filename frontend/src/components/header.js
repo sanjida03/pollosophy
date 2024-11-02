@@ -1,5 +1,13 @@
-import React from "react"
-function Header(){
+import React from "react";
+import { useNavigate } from 'react-router-dom';
+
+function Header() {
+    const navigate = useNavigate();
+    
+    const handleHome = () => {
+        navigate('/');
+    };
+    
     return (
         <header className="app-header">
             {/* Navigation */}
@@ -10,15 +18,22 @@ function Header(){
                     </div>
         
                     <div className="flex items-center space-x-3">
-                        <button className="text-white text-sm hover:bg-blue-700 font-bold bg-blue-600 px-3 py-2 rounded-md">
+                        <button 
+                            onClick={handleHome}
+                            className="text-white text-sm hover:bg-blue-700 font-bold bg-blue-600 px-3 py-2 rounded-md transition-colors"
+                        >
                             Home
                         </button>
-                        <img src="logo.png" alt="Pollosophy Logo" className="w-8 h-8" />
+                        <img 
+                            src="/logo.png" 
+                            alt="Pollosophy Logo" 
+                            className="w-8 h-8" 
+                        />
                     </div>
                 </div>
             </nav>
         </header>
-    )
+    );
 }
 
 export default Header;
