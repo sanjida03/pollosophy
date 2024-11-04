@@ -40,51 +40,53 @@ function SignUp() {
 		<div className="min-h-screen bg-blue-50">
     		<Header />
     		<main className="container mx-auto px-6 py-16">
-    			<h1 className="center-text">Account Creation</h1>
-				{/* Fetching a value for username*/}
-    			<Form
-    				className="d-grid gap-2"
-    				style={{margin: "5rem" }}
-    			>
-    				<Form.Group
-    					className="mb-3"
-    					controlId="formBasicName"
-    				>
-    					<Form.Control
-    						onChange={(e) =>
-    							setuser(e.target.value)
-    						}
-    						type="text"
-    						placeholder="Enter Name"
-    						required
-    					/>
-    				</Form.Group>
+    			<div className="max-w-md mx-auto bg-blue-100 rounded-lg p-8 shadow-md">
+    				<h1 className="text-2xl font-medium text-blue-900 mb-8">Sign-up</h1>
+					{/* Fetching a value for username*/}
+    				<Form
+    					className="d-grid gap-2"
+    					style={{margin: "5rem" }}
+	    			>
+    					<Form.Group
+    						className="mb-3"
+    						controlId="formBasicName"
+    					>
+	    					<Form.Control
+    							onChange={(e) =>
+    								setuser(e.target.value)
+    							}
+    							type="text"
+    							placeholder="Enter Name"
+    							required
+    						/>
+	    				</Form.Group>
 
-    				{/* Fetching a value for password*/}
-    				<Form.Group
-    					className="mb-3"
-    					controlId="formBasicName"
-    				>
-    					<Form.Control
-    						onChange={(e) =>
-    							setpass(e.target.value)
-    						}
-    						type="text"
-    						placeholder="Enter Password"
-    						required
-    					/>
-    				</Form.Group>
+    					{/* Fetching a value for password*/}
+    					<Form.Group
+    						className="mb-3"
+    						controlId="formBasicName"
+    					>
+	    					<Form.Control
+    							onChange={(e) =>
+    								setpass(e.target.value)
+    							}
+    							type="text"
+    							placeholder="Enter Password"
+    							required
+    						/>
+	    				</Form.Group>
 
-    				{/* Event of user pressing the Create button*/}
-    				<Button
-    					onClick={(e) => accountCreation(e)}
-    					variant="primary"
-    					type="submit"
-    				>
-    					Create
-    				</Button>
+    					{/* Event of user pressing the Create button*/}
+    					<Button
+    						onClick={(e) => accountCreation(e)}
+    						variant="primary"
+    						type="submit"
+    					>
+    						Create
+    					</Button>
 
-    			</Form>
+    				</Form>
+    			</div>
     		</main>
 		</div>
 	);
