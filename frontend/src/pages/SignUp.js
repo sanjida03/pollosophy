@@ -61,34 +61,34 @@ function SignUp() {
     						/>
 	    				</Form.Group>
 
-    					{/* Fetching a value for password*/}
-    					<Form.Group
+    				{/* Fetching a value for password*/}
+    				<Form.Group
     						className="mb-3"
     						controlId="formBasicName"
-    					>
-	    					<Form.Control
-    							onChange={(e) =>
-    								setpass(e.target.value)
-    							}
-    							type="text"
-    							placeholder="Enter Password"
-    							required
-    						/>
-	    				</Form.Group>
+    				>
+	    				<Form.Control
+    						onChange={(e) =>
+    							setpass(e.target.value)
+    						}
+    						type="text"
+    						placeholder="Enter Password"
+    						required
+    					/>
+	    			</Form.Group>
 
-    					{/* Event of user pressing the Create button*/}
-    					<Button
-    						onClick={(e) => accountCreation(e)}
-    						variant="primary"
-    						type="submit"
-    					>
-    						Create
-    					</Button>
+    				{/* Event of user pressing the Create button*/}
+    				<Button
+    					onClick={(e) => accountCreation(e)}
+    					variant="primary"
+    					type="submit"
+    				>
+    					Create
+    				</Button>
 
-    				</Form>
-    			</div>
-    		</main>
-		</div>
+    			</Form>
+    		</div>
+    	</main>
+	</div>
 	);
 }
 

@@ -1,7 +1,7 @@
+import "bootstrap/dist/css/bootstrap.min.css";
 import React from 'react';
 import { Button, Table } from "react-bootstrap";
 import Header from '../components/header';
-import "bootstrap/dist/css/bootstrap.min.css";
 import { Link, useNavigate } from "react-router-dom";
 import accounts from "../components/AccountData";
 
