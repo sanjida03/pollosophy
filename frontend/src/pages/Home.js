@@ -1,6 +1,9 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Button, Table } from "react-bootstrap";
 import Header from '../components/header';
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Link, useNavigate } from "react-router-dom";
+import accounts from "../components/AccountData";
 
 const Home = () => {
   const navigate = useNavigate();
@@ -8,6 +11,10 @@ const Home = () => {
   const handleViewPolls = () => {
     navigate('/active-polls');
   };
+  
+  const handleSignUp = () => {
+    navigate('/sign-up')
+  }
 
   const handleLogIn = () => {
     navigate('/login');
@@ -25,12 +32,14 @@ const Home = () => {
           {/* Centered Buttons */}
           <div className="space-y-4">
             <button onClick={handleLogIn}
-                className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md transition-colors text-lg font-medium"
-                >
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md transition-colors text-lg font-medium"
+              >
               Log In
             </button>
 
-            <button className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md transition-colors text-lg font-medium">
+            <button onClick={handleSignUp}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-md transition-colors text-lg font-medium"
+              >
               Sign Up
             </button>
 
