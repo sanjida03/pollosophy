@@ -5,7 +5,7 @@ import { Button, Form } from "react-bootstrap";
 import accounts from '../components/AccountData'
 import { Link, useNavigate } from "react-router-dom";
 import { v4 as uuid } from "uuid";
-import "./SignUp.css";
+import "./PageStyle.css";
 
 function SignUp() {
 	// Making usestate for initialzing and fetching a value
@@ -39,57 +39,53 @@ function SignUp() {
 	return (
 		<div className="min-h-screen bg-blue-50">
     		<Header />
-    		<h1 className="center-text">Account Creation</h1>
-			{/* Fetching a value for username*/}
-    		<Form
-    			className="d-grid gap-2"
-    			style={{margin: "5rem" }}
-    		>
-    			<Form.Group
-    				className="mb-3"
-    				controlId="formBasicName"
+    		<main className="container mx-auto px-6 py-16">
+    			<h1 className="center-text">Account Creation</h1>
+				{/* Fetching a value for username*/}
+    			<Form
+    				className="d-grid gap-2"
+    				style={{margin: "5rem" }}
     			>
-    				<Form.Control
-    					onChange={(e) =>
-    						setuser(e.target.value)
-    					}
-    					type="text"
-    					placeholder="Enter Name"
-    					required
-    				/>
-    			</Form.Group>
+    				<Form.Group
+    					className="mb-3"
+    					controlId="formBasicName"
+    				>
+    					<Form.Control
+    						onChange={(e) =>
+    							setuser(e.target.value)
+    						}
+    						type="text"
+    						placeholder="Enter Name"
+    						required
+    					/>
+    				</Form.Group>
 
-    			{/* Fetching a value for password*/}
-    			<Form.Group
-    				className="mb-3"
-    				controlId="formBasicName"
-    			>
-    				<Form.Control
-    					onChange={(e) =>
-    						setpass(e.target.value)
-    					}
-    					type="text"
-    					placeholder="Enter Password"
-    					required
-    				/>
-    			</Form.Group>
+    				{/* Fetching a value for password*/}
+    				<Form.Group
+    					className="mb-3"
+    					controlId="formBasicName"
+    				>
+    					<Form.Control
+    						onChange={(e) =>
+    							setpass(e.target.value)
+    						}
+    						type="text"
+    						placeholder="Enter Password"
+    						required
+    					/>
+    				</Form.Group>
 
-    			{/* Event of user pressing the Create button*/}
-    			<Button
-    				onClick={(e) => accountCreation(e)}
-    				variant="primary"
-    				type="submit"
-    			>
-    				Create
-    			</Button>
-
-    			{/* Redirecting back to home page */}
-    			<Link className="d-grid gap-2" to= "/">
-    				<Button variant="info" size= "lg">
-    					Home
+    				{/* Event of user pressing the Create button*/}
+    				<Button
+    					onClick={(e) => accountCreation(e)}
+    					variant="primary"
+    					type="submit"
+    				>
+    					Create
     				</Button>
-    			</Link>
-    		</Form>
+
+    			</Form>
+    		</main>
 		</div>
 	);
 }
