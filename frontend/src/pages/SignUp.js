@@ -40,7 +40,7 @@ function SignUp() {
 		<div className="min-h-screen bg-blue-50">
     		<Header />
     		<main className="container mx-auto px-6 py-16">
-    			<h1 className="center-text">Account Creation</h1>
+    			<h1 className="center-text font-bold text-blue-600">Account Creation</h1>
 				{/* Fetching a value for username*/}
     			<Form
     				className="d-grid gap-2"
