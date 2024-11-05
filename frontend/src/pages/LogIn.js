@@ -1,6 +1,6 @@
+import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState } from 'react';
 import Header from '../components/header';
-import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form } from "react-bootstrap";
 import accounts from '../components/AccountData'
 import { Link, useNavigate } from "react-router-dom";
@@ -67,7 +67,7 @@ function LogIn() {
                       getuser(e.target.value)
                     }
                     type="text"
-                    placeholder="Enter Name"
+                    placeholder="Enter Username"
                     required
                   />
                 </Form.Group>

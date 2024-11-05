@@ -1,6 +1,6 @@
+import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState } from 'react';
 import Header from '../components/header';
-import "bootstrap/dist/css/bootstrap.min.css";
 import { Button, Form } from "react-bootstrap";
 import accounts from '../components/AccountData'
 import { Link, useNavigate } from "react-router-dom";
@@ -37,7 +37,7 @@ function SignUp() {
 			return;
 		}
 		if (validator.isEmail(email)){
-			accounts.push({ user_id: uni, username: a, password: b});
+			accounts.push(newAccount);
 		}
 		else {
 			return ("Invalid Email")
@@ -80,7 +80,7 @@ function SignUp() {
     								setuser(e.target.value)
     							}
     							type="text"
-    							placeholder="Enter Name"
+    							placeholder="Enter Username"
     							required
     						/>
 	    				</Form.Group>
