@@ -36,12 +36,9 @@ function SignUp() {
 			alert("invalid");
 			return;
 		}
-		if (validator.isEmail(email)){
-			accounts.push(newAccount);
-		}
-		else {
-			return ("Invalid Email")
-		}
+		
+		accounts.push(newAccount);
+	
 
 		//Redirecting to home page after finishing account creation
 		history("/");
