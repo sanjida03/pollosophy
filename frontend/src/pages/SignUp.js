@@ -11,6 +11,7 @@ function SignUp() {
 	// Making usestate for initialzing and fetching a value
 	const [username, setuser] = useState("");
 	const [password, setpass] = useState("");
+	const [email, setemail] = useState("");
 
 	// Using useNavigation for redirecting to pages
 	let history = useNavigate();
@@ -23,14 +24,24 @@ function SignUp() {
 		let uni = ids.slice(0,8); // Slicing unique id
 
 		// Fetching values from useState and pushing to array
-		let a = username, b = password;
+		const newAccount = {
+			user_id: ids,
+			username,
+			password,
+			email,
+		  };
 
 		// Validation
-		if (username == "" || password == "") {
+		if (username == "" || password == "" || email == "") {
 			alert("invalid");
 			return;
 		}
-		accounts.push({ user_id: uni, username: a, password: b});
+		if (validator.isEmail(email)){
+			accounts.push({ user_id: uni, username: a, password: b});
+		}
+		else {
+			return ("Invalid Email")
+		}
 
 		//Redirecting to home page after finishing account creation
 		history("/");
@@ -47,6 +58,19 @@ function SignUp() {
     					className="d-grid gap-2"
     					style={{margin: "5rem" }}
 	    			>
+						<Form.Group
+    						className="mb-3"
+    						controlId="formBasicEmail"
+    					>
+	    					<Form.Control
+    							onChange={(e) =>
+    								setemail(e.target.value)
+    							}
+    							type="text"
+    							placeholder="Enter Email"
+    							required
+    						/>
+	    				</Form.Group>
     					<Form.Group
     						className="mb-3"
     						controlId="formBasicName"
