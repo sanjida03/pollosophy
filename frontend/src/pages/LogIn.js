@@ -22,7 +22,7 @@ function LogIn() {
     let a = username, b = password;
 
     // Validation
-    if (username == "" || password == "") {
+    if (username === "" || password === "") {
       alert("invalid");
       return;
     }
@@ -33,7 +33,7 @@ function LogIn() {
     // Loop through the local database
     accounts.forEach((x) => {
       // Check if the username and password matches from the array
-      if (x.username == a && x.password == b) {
+      if (x.username === a && x.password === b) {
         //Redirect to home page after logging in
         history("/");
         pass = 1;
@@ -42,7 +42,7 @@ function LogIn() {
     )
 
     // Authentication failed
-    if (pass == 0) {
+    if (pass === 0) {
       alert("invalid");
       return;
     }

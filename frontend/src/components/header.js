@@ -24,6 +24,7 @@ function Header() {
                         >
                             Home
                         </button>
+                        
                         <img 
                             src="/logo.png" 
                             alt="Pollosophy Logo" 

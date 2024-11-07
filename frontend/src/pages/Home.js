@@ -19,6 +19,7 @@ const Home = () => {
   const handleLogIn = () => {
     navigate('/login');
   }
+  
 
   return (
     <div className="min-h-screen bg-blue-50">
@@ -49,6 +50,7 @@ const Home = () => {
             >
               View Active Polls
             </button>
+
           </div>
 
           {/* Guest Access Note */}
