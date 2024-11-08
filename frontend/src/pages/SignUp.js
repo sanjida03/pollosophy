@@ -8,109 +8,136 @@ import { v4 as uuid } from "uuid";
 import "./PageStyle.css";
 
 function SignUp() {
-	// Making usestate for initialzing and fetching a value
-	const [username, setuser] = useState("");
-	const [password, setpass] = useState("");
-	const [email, setemail] = useState("");
+    const [username, setuser] = useState("");
+    const [password, setpass] = useState("");
+    const [email, setemail] = useState("");
+    const [emailError, setEmailError] = useState("");
 
-	// Using useNavigation for redirecting to pages
-	let history = useNavigate();
+    let history = useNavigate();
 
-	//Function for creating an account
-	const accountCreation = (e) => {
-		e.preventDefault(); // Prevent reload
+    // Email validation function
+    const validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
 
-		const ids = uuid();
-		let uni = ids.slice(0,8); // Slicing unique id
+    // Check if email already exists
+    const isEmailExists = (email) => {
+        return accounts.some(account => account.email === email);
+    };
 
-		// Fetching values from useState and pushing to array
-		const newAccount = {
-			user_id: ids,
-			username,
-			password,
-			email,
-		  };
+    const accountCreation = (e) => {
+        e.preventDefault();
 
-		// Validation
-		if (username == "" || password == "" || email == "") {
-			alert("invalid");
-			return;
-		}
-		
-		accounts.push(newAccount);
-	
+        // Reset email error
+        setEmailError("");
 
-		//Redirecting to home page after finishing account creation
-		history("/");
-	};
+        // Email validation
+        if (!validateEmail(email)) {
+            setEmailError("Please enter a valid email address");
+            return;
+        }
 
-	return (
-		<div className="min-h-screen bg-blue-50">
-    		<Header />
-    		<main className="container mx-auto px-6 py-16">
-    			<div className="max-w-md mx-auto bg-blue-100 rounded-lg p-8 shadow-md">
-    				<h1 className="text-2xl font-medium text-blue-900 mb-8">Sign-up</h1>
-					{/* Fetching a value for username*/}
-    				<Form
-    					className="d-grid gap-2"
-    					style={{margin: "5rem" }}
-	    			>
-						<Form.Group
-    						className="mb-3"
-    						controlId="formBasicEmail"
-    					>
-	    					<Form.Control
-    							onChange={(e) =>
-    								setemail(e.target.value)
-    							}
-    							type="text"
-    							placeholder="Enter Email"
-    							required
-    						/>
-	    				</Form.Group>
-    					<Form.Group
-    						className="mb-3"
-    						controlId="formBasicName"
-    					>
-	    					<Form.Control
-    							onChange={(e) =>
-    								setuser(e.target.value)
-    							}
-    							type="text"
-    							placeholder="Enter Username"
-    							required
-    						/>
-	    				</Form.Group>
+        // Check for existing email
+        if (isEmailExists(email)) {
+            setEmailError("This email is already registered");
+            return;
+        }
 
-    				{/* Fetching a value for password*/}
-    				<Form.Group
-    						className="mb-3"
-    						controlId="formBasicName"
-    				>
-	    				<Form.Control
-    						onChange={(e) =>
-    							setpass(e.target.value)
-    						}
-    						type="text"
-    						placeholder="Enter Password"
-    						required
-    					/>
-	    			</Form.Group>
+        // Basic validation
+        if (username === "" || password === "" || email === "") {
+            alert("All fields are required");
+            return;
+        }
 
-    				{/* Event of user pressing the Create button*/}
-    				<Button
-    					onClick={(e) => accountCreation(e)}
-    					variant="primary"
-    					type="submit"
-    				>
-    					Create
-    				</Button>
+        // Password validation
+        if (password.length < 8) {
+            alert("Password must be at least 8 characters long");
+            return;
+        }
 
-    			</Form>
-    		</div>
-    	</main>
-	</div>
-	);
+        const ids = uuid();
+        let uni = ids.slice(0, 8);
+
+        const newAccount = {
+            user_id: ids,
+            username,
+            password,
+            email,
+        };
+
+        accounts.push(newAccount);
+        history("/");
+    };
+
+    return (
+        <div className="min-h-screen bg-blue-50">
+            <Header />
+            <main className="container mx-auto px-6 py-16">
+                <div className="max-w-md mx-auto bg-blue-100 rounded-lg p-8 shadow-md">
+                    <h1 className="text-2xl font-medium text-blue-900 mb-8">Sign-up</h1>
+                    <Form
+                        className="d-grid gap-2"
+                        style={{ margin: "5rem" }}
+                    >
+                        <Form.Group
+                            className="mb-3"
+                            controlId="formBasicEmail"
+                        >
+                            <Form.Control
+                                onChange={(e) => {
+                                    setemail(e.target.value);
+                                    setEmailError(""); // Clear error when user types
+                                }}
+                                type="email"
+                                placeholder="Enter Email"
+                                required
+                                isInvalid={!!emailError}
+                            />
+                            <Form.Control.Feedback type="invalid">
+                                {emailError}
+                            </Form.Control.Feedback>
+                        </Form.Group>
+
+                        <Form.Group
+                            className="mb-3"
+                            controlId="formBasicName"
+                        >
+                            <Form.Control
+                                onChange={(e) => setuser(e.target.value)}
+                                type="text"
+                                placeholder="Enter Username"
+                                required
+                            />
+                        </Form.Group>
+
+                        <Form.Group
+                            className="mb-3"
+                            controlId="formBasicPassword"
+                        >
+                            <Form.Control
+                                onChange={(e) => setpass(e.target.value)}
+                                type="password"
+                                placeholder="Enter Password"
+                                required
+                            />
+                            <Form.Text className="text-muted">
+                                Password must be at least 8 characters long
+                            </Form.Text>
+                        </Form.Group>
+
+                        <Button
+                            onClick={(e) => accountCreation(e)}
+                            variant="primary"
+                            type="submit"
+                        >
+                            Create
+                        </Button>
+                    </Form>
+                </div>
+            </main>
+        </div>
+    );
 }
 
 export default SignUp;
