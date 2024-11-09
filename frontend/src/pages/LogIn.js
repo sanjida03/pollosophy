@@ -8,9 +8,14 @@ import { v4 as uuid } from "uuid";
 import "./PageStyle.css";
 
 function LogIn() {
+  const navigate = useNavigate();
     // Making usestate for initialaing and fetching a value
   const [username, getuser] = useState("");
   const [password, getpass] = useState("");
+
+  const handleSignUp = () => {
+    navigate('/sign-up')
+  }
 
   // Using useNavigation for redirecting to pages
   let history = useNavigate();
@@ -95,6 +100,17 @@ function LogIn() {
                 >
                   Log In
                 </Button>
+                
+                <p className="text-center text-sm text-blue-900">
+                  Don't have an account?
+                </p>
+
+                <button onClick={handleSignUp}
+                  className="text-sm text-blue-900"
+                >
+                  Sign Up
+                </button>
+                
               </Form>
             </div>
         </main> 

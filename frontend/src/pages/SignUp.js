@@ -8,10 +8,15 @@ import { v4 as uuid } from "uuid";
 import "./PageStyle.css";
 
 function SignUp() {
+	const navigate = useNavigate();
     const [username, setuser] = useState("");
     const [password, setpass] = useState("");
     const [email, setemail] = useState("");
     const [emailError, setEmailError] = useState("");
+
+	const handleLogIn = () => {
+		navigate('/login');
+	  }
 
     let history = useNavigate();
 
@@ -133,6 +138,16 @@ function SignUp() {
                         >
                             Create
                         </Button>
+
+						<p className="text-center text-sm text-blue-900">
+							Have an account?
+						</p>
+
+						<button onClick={handleLogIn}
+							className="text-sm text-blue-900"
+						>
+							Log in
+						</button>
                     </Form>
                 </div>
             </main>

@@ -22,14 +22,14 @@ const Home = () => {
   
 
   return (
-    <div className="min-h-screen bg-blue-50">
+  
+    <div className="min-h-screen bg-sky-50">
       <Header />
-
       {/* Main Content */}
       <main className="container mx-auto px-6 py-16">
         <div className="max-w-md mx-auto bg-blue-100 rounded-lg p-8 shadow-md">
+          
           <h2 className="text-2xl font-bold text-center mb-8 text-blue-900">Welcome to Pollosophy</h2>
-
           {/* Centered Buttons */}
           <div className="space-y-4">
             <button onClick={handleLogIn}
