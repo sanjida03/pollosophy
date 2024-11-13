@@ -8,15 +8,16 @@ import { v4 as uuid } from "uuid";
 import "./PageStyle.css";
 
 function SignUp() {
-	const navigate = useNavigate();
+    const navigate = useNavigate();
     const [username, setuser] = useState("");
     const [password, setpass] = useState("");
     const [email, setemail] = useState("");
     const [emailError, setEmailError] = useState("");
+    const [isSignedUp, setIsSignedUp] = useState(false);  
 
-	const handleLogIn = () => {
-		navigate('/login');
-	  }
+    const handleLogIn = () => {
+        navigate('/login');
+    }
 
     let history = useNavigate();
 
@@ -72,8 +73,33 @@ function SignUp() {
         };
 
         accounts.push(newAccount);
-        history("/");
+        setIsSignedUp(true);  
     };
+
+    // Add this conditional render
+    if (isSignedUp) {
+        return (
+            <div className="min-h-screen bg-blue-50">
+                <Header />
+                <main className="container mx-auto px-6 py-16">
+                    <div className="max-w-md mx-auto bg-blue-100 rounded-lg p-8 shadow-md">
+                        <h1 className="text-2xl font-medium text-blue-900 mb-4">
+                            Hello, {username}!
+                        </h1>
+                        <p className="text-blue-700 mb-6">
+                            Your account has been successfully created.
+                        </p>
+                        <Button 
+                            onClick={handleLogIn}
+                            variant="primary"
+                        >
+                            Proceed to Login
+                        </Button>
+                    </div>
+                </main>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-blue-50">
@@ -139,15 +165,15 @@ function SignUp() {
                             Create
                         </Button>
 
-						<p className="text-center text-sm text-blue-900">
-							Have an account?
-						</p>
+                        <p className="text-center text-sm text-blue-900">
+                            Have an account?
+                        </p>
 
-						<button onClick={handleLogIn}
-							className="text-sm text-blue-900"
-						>
-							Log in
-						</button>
+                        <button onClick={handleLogIn}
+                            className="text-sm text-blue-900"
+                        >
+                            Log in
+                        </button>
                     </Form>
                 </div>
             </main>

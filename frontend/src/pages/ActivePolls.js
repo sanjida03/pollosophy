@@ -24,7 +24,7 @@ const Comment = ({ comment, onDelete, isAuthor }) => {
   );
 };
 
-const CommentSection = ({ pollId, isAuthenticated }) => {
+const CommentSection = ({ pollId, isLoggedIn }) => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
   const [showComments, setShowComments] = useState(false);
@@ -68,7 +68,7 @@ const CommentSection = ({ pollId, isAuthenticated }) => {
         Hide Comments
       </button>
       
-      {isAuthenticated && (
+      {isLoggedIn && (
         <div className="mb-4">
           <textarea
             value={newComment}
@@ -104,13 +104,13 @@ const CommentSection = ({ pollId, isAuthenticated }) => {
   );
 };
 
-const Question = ({ data, isAuthenticated }) => {
+const Question = ({ data, isLoggedIn }) => {
   const [selectedChoice, setSelectedChoice] = useState(null);
   const [hasVoted, setHasVoted] = useState(false);
   const [setShowLoginAlert] = useState(false);
 
   const handleVote = () => {
-    if (!isAuthenticated) {
+    if (!isLoggedIn) {
       setShowLoginAlert(true);
       return;
     }
@@ -132,14 +132,14 @@ const Question = ({ data, isAuthenticated }) => {
               id={`choice-${data.id}-${choice.id}`}
               name={`poll-${data.id}`}
               className="mr-3"
-              disabled={hasVoted || !isAuthenticated}
+              disabled={hasVoted || !isLoggedIn}
               onChange={() => setSelectedChoice(choice.id)}
               checked={selectedChoice === choice.id}
             />
             <label
               htmlFor={`choice-${data.id}-${choice.id}`}
               className={`cursor-pointer ${
-                !isAuthenticated ? 'text-gray-500' : 'text-blue-700'
+                !isLoggedIn ? 'text-gray-500' : 'text-blue-700'
               }`}
             >
               {choice.text}
@@ -163,14 +163,14 @@ const Question = ({ data, isAuthenticated }) => {
         </button>
       </div>
 
-      <CommentSection pollId={data.id} isAuthenticated={isAuthenticated} />
+      <CommentSection pollId={data.id} isLoggedIn={isLoggedIn} />
     </div>
   );
 };
 
 const ActivePolls = () => {
   const navigate = useNavigate();
-  const [isAuthenticated] = useState(false);
+  const [isLoggedIn] = useState(false);
   
   const [polls] = useState([
     {
@@ -214,7 +214,7 @@ const ActivePolls = () => {
         <div className="max-w-4xl mx-auto">
           <div className="flex justify-between items-center mb-8">
             <h1 className="text-3xl font-bold text-blue-800">Active Polls</h1>
-            {!isAuthenticated && (
+            {!isLoggedIn && (
               <button
                 onClick={() => navigate('/login')}
                 className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
@@ -228,7 +228,7 @@ const ActivePolls = () => {
               <Question 
                 key={poll.id} 
                 data={poll} 
-                isAuthenticated={isAuthenticated}
+                isLoggedIn={isLoggedIn}
               />
             ))}
           </div>
