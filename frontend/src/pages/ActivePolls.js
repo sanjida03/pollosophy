@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from '../components/header';
 
@@ -24,19 +24,19 @@ const Comment = ({ comment, onDelete, isAuthor }) => {
   );
 };
 
-const CommentSection = ({ pollId, isLoggedIn }) => {
+const CommentSection = ({ pollId, currentUser, isLoggedIn }) => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
   const [showComments, setShowComments] = useState(false);
 
   const handleAddComment = () => {
-    if (!newComment.trim()) return;
-
+    if (!newComment.trim() || !isLoggedIn) return;
+    
     const comment = {
       id: Date.now(),
       pollId,
-      author: 'Current User', 
-      text: newComment,
+      author: currentUser,
+      text: newComment.trim(),
       timestamp: new Date().toLocaleString(),
     };
 
@@ -74,7 +74,7 @@ const CommentSection = ({ pollId, isLoggedIn }) => {
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
             placeholder="Add a comment..."
-            className="w-full h-8 border-blue-300 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full p-2 border border-blue-300 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
             rows="3"
           />
           <button
@@ -93,7 +93,7 @@ const CommentSection = ({ pollId, isLoggedIn }) => {
             key={comment.id}
             comment={comment}
             onDelete={handleDeleteComment}
-            isAuthor={true} // In a real app, compare with current user
+            isAuthor={comment.author === currentUser}
           />
         ))}
         {comments.length === 0 && (
@@ -104,10 +104,10 @@ const CommentSection = ({ pollId, isLoggedIn }) => {
   );
 };
 
-const Question = ({ data, isLoggedIn }) => {
+const Question = ({ data, isLoggedIn, currentUser, onVote }) => {
   const [selectedChoice, setSelectedChoice] = useState(null);
   const [hasVoted, setHasVoted] = useState(false);
-  const [setShowLoginAlert] = useState(false);
+  const [showLoginAlert, setShowLoginAlert] = useState(false);
 
   const handleVote = () => {
     if (!isLoggedIn) {
@@ -115,7 +115,8 @@ const Question = ({ data, isLoggedIn }) => {
       return;
     }
     
-    if (selectedChoice != null) {
+    if (selectedChoice !== null) {
+      onVote(data.id, selectedChoice);
       setHasVoted(true);
     }
   };
@@ -143,18 +144,20 @@ const Question = ({ data, isLoggedIn }) => {
               }`}
             >
               {choice.text}
+              {hasVoted && ` (${choice.votes || 0} votes)`}
             </label>
           </div>
         ))}
       </div>
+
       <div className="mt-4">
         <button 
           onClick={handleVote}
-          disabled={selectedChoice === null || hasVoted}
+          disabled={selectedChoice === null || hasVoted || !isLoggedIn}
           className={`px-4 py-2 rounded-md ${
             hasVoted
               ? 'bg-blue-300 text-white cursor-not-allowed'
-              : selectedChoice === null
+              : selectedChoice === null || !isLoggedIn
               ? 'bg-blue-400 text-white cursor-not-allowed'
               : 'bg-blue-500 hover:bg-blue-600 text-white'
           }`}
@@ -163,48 +166,79 @@ const Question = ({ data, isLoggedIn }) => {
         </button>
       </div>
 
-      <CommentSection pollId={data.id} isLoggedIn={isLoggedIn} />
+      <CommentSection 
+        pollId={data.id} 
+        currentUser={currentUser}
+        isLoggedIn={isLoggedIn} 
+      />
     </div>
   );
 };
 
 const ActivePolls = () => {
   const navigate = useNavigate();
-  const [isLoggedIn] = useState(false);
-  
-  const [polls] = useState([
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState("");
+  const [polls, setPolls] = useState([
     {
       id: 1,
       question: "What's your favorite programming language?",
       choices: [
-        { id: 1, text: "JavaScript" },
-        { id: 2, text: "Python" },
-        { id: 3, text: "Java" },
-        { id: 4, text: "C++" }
-      ],
-      userVoted: false
+        { id: 1, text: "JavaScript", votes: 0 },
+        { id: 2, text: "Python", votes: 0 },
+        { id: 3, text: "Java", votes: 0 },
+        { id: 4, text: "C++", votes: 0 }
+      ]
     },
     {
       id: 2,
       question: "What's your preferred work environment?",
       choices: [
-        { id: 1, text: "Fully remote"},
-        { id: 2, text: "Hybrid"},
-        { id: 3, text: "Office-based"},
-      ],
-      userVoted: false
+        { id: 1, text: "Fully remote", votes: 0 },
+        { id: 2, text: "Hybrid", votes: 0 },
+        { id: 3, text: "Office-based", votes: 0 },
+      ]
     },
     {
       id: 3,
       question: "What's your favorite holiday?",
       choices: [
-        { id: 1, text: "Christmas"},
-        { id: 2, text: "Halloween"},
-        { id: 3, text: "Thanksgiving"}
-      ],
-      userVoted: false
+        { id: 1, text: "Christmas", votes: 0 },
+        { id: 2, text: "Halloween", votes: 0 },
+        { id: 3, text: "Thanksgiving", votes: 0 }
+      ]
     }
   ]);
+
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    if (loggedInUser) {
+      setCurrentUser(loggedInUser);
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('loggedInUser');
+    setIsLoggedIn(false);
+    setCurrentUser('');
+    navigate('/');
+  };
+
+  const handleVote = (pollId, choiceId) => {
+    setPolls(polls.map(poll => {
+      if (poll.id === pollId) {
+        return {
+          ...poll,
+          choices: poll.choices.map(choice => ({
+            ...choice,
+            votes: choice.id === choiceId ? (choice.votes || 0) + 1 : choice.votes
+          }))
+        };
+      }
+      return poll;
+    }));
+  };
 
   return (
     <div className="min-h-screen bg-blue-50">
@@ -213,22 +247,39 @@ const ActivePolls = () => {
       <main className="container mx-auto px-6 py-16">
         <div className="max-w-4xl mx-auto">
           <div className="flex justify-between items-center mb-8">
-            <h1 className="text-3xl font-bold text-blue-800">Active Polls</h1>
-            {!isLoggedIn && (
-              <button
-                onClick={() => navigate('/login')}
-                className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-              >
-                Log in to Vote
-              </button>
-            )}
+            <div>
+              <h1 className="text-3xl font-bold text-blue-800">Active Polls</h1>
+              {isLoggedIn && (
+                <p className="text-blue-600 mt-2">Welcome, {currentUser}!</p>
+              )}
+            </div>
+            <div>
+              {!isLoggedIn ? ( 
+                <button
+                  onClick={() => navigate('/login')}
+                  className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+                >
+                  Log in to Vote
+                </button>
+              ) : (
+                <button
+                  onClick={handleLogout}
+                  className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+                >
+                  Logout
+                </button>
+              )}
+            </div>
           </div>
+          
           <div className="space-y-4">
             {polls.map((poll) => (
               <Question 
                 key={poll.id} 
                 data={poll} 
                 isLoggedIn={isLoggedIn}
+                currentUser={currentUser}
+                onVote={handleVote}
               />
             ))}
           </div>
