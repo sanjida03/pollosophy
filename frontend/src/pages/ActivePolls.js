@@ -25,9 +25,16 @@ const Comment = ({ comment, onDelete, isAuthor }) => {
 };
 
 const CommentSection = ({ pollId, currentUser, isLoggedIn }) => {
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState(() => {
+    const storedComments = JSON.parse(localStorage.getItem(`poll-${pollId}-comments`) || '[]');
+    return storedComments;
+  });
   const [newComment, setNewComment] = useState('');
   const [showComments, setShowComments] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem(`poll-${pollId}-comments`, JSON.stringify(comments));
+  }, [comments, pollId]);
 
   const handleAddComment = () => {
     if (!newComment.trim() || !isLoggedIn) return;
@@ -45,7 +52,8 @@ const CommentSection = ({ pollId, currentUser, isLoggedIn }) => {
   };
 
   const handleDeleteComment = (commentId) => {
-    setComments(comments.filter(comment => comment.id !== commentId));
+    const updatedComments = comments.filter(comment => comment.id !== commentId);
+    setComments(updatedComments);
   };
 
   if (!showComments) {
@@ -104,17 +112,15 @@ const CommentSection = ({ pollId, currentUser, isLoggedIn }) => {
   );
 };
 
-const Question = ({ data, isLoggedIn, currentUser, onVote }) => {
+const Question = ({ data, isLoggedIn, currentUser, onVote, userVotes }) => {
   const [selectedChoice, setSelectedChoice] = useState(null);
-  const [hasVoted, setHasVoted] = useState(false);
-  const [showLoginAlert, setShowLoginAlert] = useState(false);
+  const [hasVoted, setHasVoted] = useState(userVotes[data.id] !== undefined);
+
+  useEffect(() => {
+    setHasVoted(userVotes[data.id] !== undefined);
+  }, [userVotes, data.id]);
 
   const handleVote = () => {
-    if (!isLoggedIn) {
-      setShowLoginAlert(true);
-      return;
-    }
-    
     if (selectedChoice !== null) {
       onVote(data.id, selectedChoice);
       setHasVoted(true);
@@ -179,36 +185,135 @@ const ActivePolls = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState("");
-  const [polls, setPolls] = useState([
-    {
-      id: 1,
-      question: "What's your favorite programming language?",
-      choices: [
-        { id: 1, text: "JavaScript", votes: 0 },
-        { id: 2, text: "Python", votes: 0 },
-        { id: 3, text: "Java", votes: 0 },
-        { id: 4, text: "C++", votes: 0 }
-      ]
-    },
-    {
-      id: 2,
-      question: "What's your preferred work environment?",
-      choices: [
-        { id: 1, text: "Fully remote", votes: 0 },
-        { id: 2, text: "Hybrid", votes: 0 },
-        { id: 3, text: "Office-based", votes: 0 },
-      ]
-    },
-    {
-      id: 3,
-      question: "What's your favorite holiday?",
-      choices: [
-        { id: 1, text: "Christmas", votes: 0 },
-        { id: 2, text: "Halloween", votes: 0 },
-        { id: 3, text: "Thanksgiving", votes: 0 }
-      ]
-    }
-  ]);
+  
+  const [polls, setPolls] = useState(() => {
+    const storedPolls = JSON.parse(localStorage.getItem('polls') || 'null');
+    return storedPolls || [
+      {
+        id: 1,
+        question: "What's your favorite programming language?",
+        choices: [
+          { id: 1, text: "JavaScript", votes: 0 },
+          { id: 2, text: "Python", votes: 0 },
+          { id: 3, text: "Java", votes: 0 },
+          { id: 4, text: "C++", votes: 0 }
+        ]
+      },
+      {
+        id: 2,
+        question: "What's your preferred work environment?",
+        choices: [
+          { id: 1, text: "Fully remote", votes: 0 },
+          { id: 2, text: "Hybrid", votes: 0 },
+          { id: 3, text: "Office-based", votes: 0 },
+        ]
+      },
+      {
+        id: 3,
+        question: "What's your favorite holiday?",
+        choices: [
+          { id: 1, text: "Christmas", votes: 0 },
+          { id: 2, text: "Halloween", votes: 0 },
+          { id: 3, text: "Thanksgiving", votes: 0 }
+        ]
+      },
+      {
+        id: 4,
+        question: "What's your preferred coffee drink?",
+        choices: [
+          { id: 1, text: "Espresso", votes: 0 },
+          { id: 2, text: "Latte", votes: 0 },
+          { id: 3, text: "Cappuccino", votes: 0 },
+          { id: 4, text: "Americano", votes: 0 }
+        ]
+      },
+      {
+        id: 5,
+        question: "What's your favorite way to exercise?",
+        choices: [
+          { id: 1, text: "Running", votes: 0 },
+          { id: 2, text: "Weight Training", votes: 0 },
+          { id: 3, text: "Yoga", votes: 0 },
+          { id: 4, text: "Swimming", votes: 0 }
+        ]
+      },
+      {
+        id: 6,
+        question: "What's your preferred mode of transportation?",
+        choices: [
+          { id: 1, text: "Car", votes: 0 },
+          { id: 2, text: "Public Transit", votes: 0 },
+          { id: 3, text: "Bicycle", votes: 0 },
+          { id: 4, text: "Walking", votes: 0 }
+        ]
+      },
+      {
+        id: 7,
+        question: "What's your favorite subject?",
+        choices: [
+          { id: 1, text: "Math", votes: 0 },
+          { id: 2, text: "Science", votes: 0 },
+          { id: 3, text: "English", votes: 0 },
+          { id: 4, text: "History", votes: 0 }
+        ]
+      },
+      {
+        id: 8,
+        question: "What's your preferred music genre?",
+        choices: [
+          { id: 1, text: "Rock", votes: 0 },
+          { id: 2, text: "Pop", votes: 0 },
+          { id: 3, text: "Hip Hop", votes: 0 },
+          { id: 4, text: "Classical", votes: 0 }
+        ]
+      },
+      {
+        id: 9,
+        question: "What's your ideal vacation destination?",
+        choices: [
+          { id: 1, text: "Beach", votes: 0 },
+          { id: 2, text: "Mountains", votes: 0 },
+          { id: 3, text: "City", votes: 0 },
+          { id: 4, text: "Historical Sites", votes: 0 }
+        ]
+      },
+      {
+        id: 10,
+        question: "What's your preferred social media platform?",
+        choices: [
+          { id: 1, text: "Instagram", votes: 0 },
+          { id: 2, text: "Twitter/X", votes: 0 },
+          { id: 3, text: "TikTok", votes: 0 },
+          { id: 4, text: "LinkedIn", votes: 0 }
+        ]
+      },
+      {
+        id: 11,
+        question: "What's your favorite type of cuisine?",
+        choices: [
+          { id: 1, text: "Italian", votes: 0 },
+          { id: 2, text: "Chinese", votes: 0 },
+          { id: 3, text: "Mexican", votes: 0 },
+          { id: 4, text: "Indian", votes: 0 }
+        ]
+      },
+    ];
+  });
+
+  // Track user votes to prevent multiple votes
+  const [userVotes, setUserVotes] = useState(() => {
+    return JSON.parse(localStorage.getItem('userVotes') || '{}');
+  });
+
+  // Update localStorage whenever polls change
+  useEffect(() => {
+    localStorage.setItem('polls', JSON.stringify(polls));
+  }, [polls]);
+
+  // Update localStorage whenever userVotes change
+  useEffect(() => {
+    localStorage.setItem('userVotes', JSON.stringify(userVotes));
+  }, [userVotes]);
 
   useEffect(() => {
     const loggedInUser = localStorage.getItem('loggedInUser');
@@ -226,7 +331,11 @@ const ActivePolls = () => {
   };
 
   const handleVote = (pollId, choiceId) => {
-    setPolls(polls.map(poll => {
+    // Prevent multiple votes for the same poll
+    if (userVotes[pollId] !== undefined) return;
+
+    // Update polls
+    const updatedPolls = polls.map(poll => {
       if (poll.id === pollId) {
         return {
           ...poll,
@@ -237,7 +346,16 @@ const ActivePolls = () => {
         };
       }
       return poll;
-    }));
+    });
+
+    // Update user votes
+    const updatedUserVotes = {
+      ...userVotes,
+      [pollId]: choiceId
+    };
+
+    setPolls(updatedPolls);
+    setUserVotes(updatedUserVotes);
   };
 
   return (
@@ -280,6 +398,7 @@ const ActivePolls = () => {
                 isLoggedIn={isLoggedIn}
                 currentUser={currentUser}
                 onVote={handleVote}
+                userVotes={userVotes}
               />
             ))}
           </div>
